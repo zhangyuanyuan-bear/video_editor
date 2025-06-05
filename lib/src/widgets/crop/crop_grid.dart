@@ -132,8 +132,7 @@ class _CropGridViewerState extends State<CropGridViewer> with CropPreviewMixin {
   void _scaleRect() {
     layout = _computeLayout();
     rect.value = calculateCroppedRect(_controller, layout);
-    transform.value =
-        TransformData.fromRect(rect.value, layout, viewerSize, _controller);
+    transform.value = TransformData.fromRect(rect.value, layout, viewerSize, _controller);
   }
 
   /// Return [Rect] expanded position to improve touch detection
@@ -322,42 +321,7 @@ class _CropGridViewerState extends State<CropGridViewer> with CropPreviewMixin {
   @override
   Widget buildView(BuildContext context, TransformData transform) {
     // return crop view without the grid
-    if (widget.showGrid == false) {
-      return _buildCropView(transform);
-    }
-
-    // return the crop view with a [GestureDetector] on top to be able to edit the crop parameters
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        _buildCropView(transform),
-        // for development only (rotation not applied)
-        // Positioned.fromRect(
-        //   rect: _expandedRect().shift(gestureOffset),
-        //   child: DecoratedBox(
-        //     decoration: BoxDecoration(
-        //       color: Colors.greenAccent.withOpacity(0.4),
-        //     ),
-        //   ),
-        // ),
-        Transform.rotate(
-          angle: transform.rotation,
-          child: GestureDetector(
-            onPanDown: _onPanDown,
-            onPanUpdate: _onPanUpdate,
-            onPanEnd: (_) => _onPanEnd(),
-            onTapUp: (_) => _onPanEnd(),
-            child: const SizedBox.expand(
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                    // color: Colors.redAccent.withOpacity(0.4), // dev only
-                    ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
+    return _buildCropView(transform);
   }
 
   /// Returns the [VideoViewer] tranformed with editing view
@@ -367,7 +331,6 @@ class _CropGridViewerState extends State<CropGridViewer> with CropPreviewMixin {
       padding: widget.margin,
       child: buildVideoView(
         _controller,
-        transform,
         _boundary,
         showGrid: widget.showGrid,
       ),

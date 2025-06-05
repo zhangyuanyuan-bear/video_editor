@@ -34,11 +34,10 @@ mixin CropPreviewMixin<T extends StatefulWidget> on State<T> {
   }) {
     if (viewerSize == Size.zero) return Size.zero;
     final videoRatio = controller.video.value.aspectRatio;
-    final size = Size(viewerSize.width - margin.horizontal,
-        viewerSize.height - margin.vertical);
+    final size = Size(viewerSize.width - margin.horizontal, viewerSize.height - margin.vertical);
     if (shouldFlipped) {
-      return computeSizeWithRatio(videoRatio > 1 ? size.flipped : size,
-              getOppositeRatio(videoRatio))
+      return computeSizeWithRatio(
+              videoRatio > 1 ? size.flipped : size, getOppositeRatio(videoRatio))
           .flipped;
     }
     return computeSizeWithRatio(size, videoRatio);
@@ -52,24 +51,13 @@ mixin CropPreviewMixin<T extends StatefulWidget> on State<T> {
   /// Paint rect on top of the video area outside of the crop rect
   Widget buildVideoView(
     VideoEditorController controller,
-    TransformData transform,
     CropBoundaries boundary, {
     bool showGrid = false,
   }) {
     return SizedBox.fromSize(
       size: layout,
-      child: CropTransformWithAnimation(
-        shouldAnimate: layout != Size.zero,
-        transform: transform,
-        child: VideoViewer(
-          controller: controller,
-          child: buildPaint(
-            controller,
-            boundary: boundary,
-            showGrid: showGrid,
-            showCenterRects: controller.preferredCropAspectRatio == null,
-          ),
-        ),
+      child: VideoViewer(
+        controller: controller,
       ),
     );
   }
@@ -89,8 +77,7 @@ mixin CropPreviewMixin<T extends StatefulWidget> on State<T> {
         child: ImageViewer(
           controller: controller,
           bytes: bytes,
-          child:
-              buildPaint(controller, showGrid: false, showCenterRects: false),
+          child: buildPaint(controller, showGrid: false, showCenterRects: false),
         ),
       ),
     );
@@ -132,8 +119,7 @@ mixin CropPreviewMixin<T extends StatefulWidget> on State<T> {
 
       return ValueListenableBuilder(
         valueListenable: transform,
-        builder: (_, TransformData transform, __) =>
-            buildView(context, transform),
+        builder: (_, TransformData transform, __) => buildView(context, transform),
       );
     });
   }
