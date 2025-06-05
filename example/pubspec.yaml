@@ -21,6 +21,19 @@ dependencies:
   video_player: ^2.9.3
   ffmpeg_kit_flutter_new: ^1.6.1
 
+  photo_manager: ^3.2.0
+  permission_handler: ^11.3.0 # 请求和处理用户权限
+  photo_manager_image_provider: ^2.1.1 # 显示图片库
+
+
+  image_gallery_saver: # 相册保存图片
+    git:
+      url: https://github.com/knottx/image_gallery_saver.git
+      ref: knottx-latest
+
+
+
+
 flutter:
   uses-material-design: true
 
